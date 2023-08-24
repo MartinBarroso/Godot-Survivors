@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cf0ywrcopbwj6"]
+
+[ext_resource type="PackedScene" uid="uid://qfvdj2l57m04" path="res://Scenes/player.tscn" id="1_b0up8"]
+[ext_resource type="Texture2D" uid="uid://dpnlaff2xmoe2" path="res://Assets/background.png" id="2_4yaa1"]
+[ext_resource type="PackedScene" uid="uid://0swnp36q0fw" path="res://Scenes/enemy.tscn" id="3_rs34n"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("1_b0up8")]
+position = Vector2(577, 320)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Background" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Background"]
+position = Vector2(577, 320)
+scale = Vector2(3, 3)
+texture = ExtResource("2_4yaa1")
+
+[node name="enemy" parent="." instance=ExtResource("3_rs34n")]
