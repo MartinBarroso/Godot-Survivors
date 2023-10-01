@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://0swnp36q0fw"]
+
+[ext_resource type="Texture2D" uid="uid://c838vrxlqdb4o" path="res://Assets/icon.svg" id="1_08chx"]
+
+[sub_resource type="GDScript" id="GDScript_8evoy"]
+script/source = "extends Area2D
+
+@export var speed : float = 200
+
+var direction: Vector2
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	direction = global_position.direction_to(GameManager.player.global_position)
+	translate(direction * delta * speed)
+	pass
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p2ubv"]
+size = Vector2(161, 156)
+
+[sub_resource type="GDScript" id="GDScript_72k5v"]
+script/source = "extends Sprite2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[node name="enemy" type="Area2D"]
+script = SubResource("GDScript_8evoy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_p2ubv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.25932, 1.21609)
+texture = ExtResource("1_08chx")
+script = SubResource("GDScript_72k5v")

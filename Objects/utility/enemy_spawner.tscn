@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxb0la2v4ynd7"]
+
+[sub_resource type="GDScript" id="GDScript_ssu72"]
+script/source = "extends Marker2D
+
+@export var enemy_scene : PackedScene
+@export var min_shot_time : float = 0.5
+@export var max_shot_time : float = 2
+
+signal enemy_spawned
+
+func _ready():
+	randomize()
+	_set_new_spawn_time()
+	enemy_spawned.connect(Callable(GameManager, \"on_enemy_spawned\"))
+	pass
+
+func _set_new_spawn_time():
+	$Timer.wait_time = randf_range(min_shot_time, max_shot_time)
+	$Timer.start()
+
+
+func _on_player_player_moved(distance_moved: Vector2):
+	translate(distance_moved)
+	pass # Replace with function body.
+
+func _on_timer_timeout():
+	if GameManager.can_spawn_enemy():
+		emit_signal(\"enemy_spawned\")
+		var enemy = enemy_scene.instantiate()
+		enemy.global_position = global_position
+		get_tree().root.add_child(enemy)
+		_set_new_spawn_time()
+		
+	pass # Replace with function body.
+"
+
+[node name="enemy_spawner" type="Marker2D"]
+script = SubResource("GDScript_ssu72")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,12 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://cf0ywrcopbwj6"]
+[gd_scene load_steps=5 format=3 uid="uid://bm7swdllgnm0a"]
 
-[ext_resource type="PackedScene" uid="uid://qfvdj2l57m04" path="res://Scenes/player.tscn" id="1_b0up8"]
+[ext_resource type="PackedScene" uid="uid://qfvdj2l57m04" path="res://Objects/player.tscn" id="1_b0up8"]
 [ext_resource type="Texture2D" uid="uid://dfam1p1aph2c1" path="res://Assets/background.png" id="2_4yaa1"]
-[ext_resource type="PackedScene" uid="uid://0swnp36q0fw" path="res://Scenes/enemy.tscn" id="3_rs34n"]
+[ext_resource type="PackedScene" uid="uid://0swnp36q0fw" path="res://Objects/enemy.tscn" id="3_rs34n"]
+[ext_resource type="PackedScene" uid="uid://bxb0la2v4ynd7" path="res://Objects/utility/enemy_spawner.tscn" id="4_pafnu"]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="player" parent="." instance=ExtResource("1_b0up8")]
+[node name="player" parent="." groups=["player"] instance=ExtResource("1_b0up8")]
 position = Vector2(577, 320)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -21,4 +22,23 @@ position = Vector2(-125, 587)
 scale = Vector2(2, 2)
 texture = ExtResource("2_4yaa1")
 
-[node name="enemy" parent="." instance=ExtResource("3_rs34n")]
+[node name="enemy_spawner" parent="." instance=ExtResource("4_pafnu")]
+position = Vector2(582, -194)
+enemy_scene = ExtResource("3_rs34n")
+
+[node name="enemy_spawner2" parent="." instance=ExtResource("4_pafnu")]
+position = Vector2(1325, 315)
+enemy_scene = ExtResource("3_rs34n")
+
+[node name="enemy_spawner3" parent="." instance=ExtResource("4_pafnu")]
+position = Vector2(-168, 326)
+enemy_scene = ExtResource("3_rs34n")
+
+[node name="enemy_spawner4" parent="." instance=ExtResource("4_pafnu")]
+position = Vector2(588, 748)
+enemy_scene = ExtResource("3_rs34n")
+
+[connection signal="player_moved" from="player" to="enemy_spawner" method="_on_player_player_moved"]
+[connection signal="player_moved" from="player" to="enemy_spawner2" method="_on_player_player_moved"]
+[connection signal="player_moved" from="player" to="enemy_spawner3" method="_on_player_player_moved"]
+[connection signal="player_moved" from="player" to="enemy_spawner4" method="_on_player_player_moved"]

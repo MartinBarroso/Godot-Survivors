@@ -8,7 +8,7 @@ script/source = "extends Area2D
 @export var speed: float = 500.0
 @export var life: float = 100.0
 
-signal player_moved
+signal player_moved(transform: Vector2)
 
 var velocity: Vector2
 
@@ -24,7 +24,11 @@ func _process(delta):
 func _physics_process(delta):
 	velocity.x = Input.get_axis(\"move_left\", \"move_right\")
 	velocity.y = Input.get_axis(\"move_up\", \"move_down\")
-	translate(velocity.normalized() * delta * speed)
+	
+	var vector_distance_moved = velocity.normalized() * delta * speed
+	translate(vector_distance_moved)
+	
+	emit_signal(\"player_moved\", vector_distance_moved)
 	pass
 "
 
@@ -43,5 +47,3 @@ position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_flel7")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-
-[connection signal="player_moved" from="." to="Camera2D" method="_on_player_player_moved"]
